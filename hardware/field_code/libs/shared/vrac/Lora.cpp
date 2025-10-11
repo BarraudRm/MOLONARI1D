@@ -298,5 +298,4 @@ void LoraCommunication::closeSession(uint8_t lastPacket)
     }
   }
   LORA_LOG_LN("Session closure failed after retries.");
-
 }
