@@ -1,7 +1,5 @@
-//BUILD DIR MUST BE COHERENTLY SPECIFIED (temporary)
-//command line to compile this in test_build_temp:
-//arduino-cli compile --build-path ../test_build_temp --fqbn arduino:samd:mkrwan1310 .
-
+#include <Arduino.h>
+#line 1 "C:\\Users\\rbarr\\Documents\\2A_S3\\MOLONARI\\TD3\\MOLONARI1D\\hardware\\tests\\Relay_Lora\\Relay_Lora.ino"
 /*#ifndef BUILDPATH
 #define BUILDPATH (relative_path) "../" + relative_path
 #endif
@@ -13,7 +11,7 @@
 #include BUILDPATH("../../field_code/libs/shared/protocols/LoRa/Lora.hpp")
 */
 #include "../../../field_code/libs/shared/protocols/LoRa/Lora.hpp" //WARNING : doesn't match with this adress but with build directory path that must be specified in arduino CLI build line.
-
+//BUILD DIR MUST BE COHERENTLY SPECIFIED (temporary)
 #include <queue>
 
 // Uncomment this line to enable diagnostics log on serial for the main loop
@@ -36,6 +34,13 @@ uint8_t defaultdestination = 0xff;
 // Counter to rotate through test modes or other options (if applicable)
 uint8_t rotate = 0;
 
+#line 35 "C:\\Users\\rbarr\\Documents\\2A_S3\\MOLONARI\\TD3\\MOLONARI1D\\hardware\\tests\\Relay_Lora\\Relay_Lora.ino"
+void setup();
+#line 56 "C:\\Users\\rbarr\\Documents\\2A_S3\\MOLONARI\\TD3\\MOLONARI1D\\hardware\\tests\\Relay_Lora\\Relay_Lora.ino"
+void PrintQueue(std::queue<String> &receiveQueue);
+#line 70 "C:\\Users\\rbarr\\Documents\\2A_S3\\MOLONARI\\TD3\\MOLONARI1D\\hardware\\tests\\Relay_Lora\\Relay_Lora.ino"
+void loop();
+#line 35 "C:\\Users\\rbarr\\Documents\\2A_S3\\MOLONARI\\TD3\\MOLONARI1D\\hardware\\tests\\Relay_Lora\\Relay_Lora.ino"
 void setup() {
   // Configure the built-in LED as output
   pinMode(LED_BUILTIN, OUTPUT);
@@ -107,3 +112,4 @@ void loop()
     }
   }
 }
+

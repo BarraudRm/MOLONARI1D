@@ -43,5 +43,5 @@ hardware/field_code          # opposed to backend or data analysis code
   
 - **hardware/sensors/temperature/Sensor/Sensor.ino** became hardware/**field_code/libs/sensors/temperature/temperature_sensor.ino**
   
-- 
+- moved **tests/** in **field_code/**
 

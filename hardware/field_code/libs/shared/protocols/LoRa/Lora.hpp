@@ -1,8 +1,8 @@
 #ifndef LORA_HPP
 #define LORA_HPP
 
-//#include <Arduino.h>
-//#include <LoRa.h>
+#include <Arduino.h>
+#include <LoRa.h>
 #include <queue>
 #include <unordered_set>
 
