@@ -1,6 +1,4 @@
-//BUILD DIR MUST BE COHERENTLY SPECIFIED (temporary)
-//command line to compile this in test_build_temp:
-//arduino-cli compile --build-path ../test_build_temp --fqbn arduino:samd:mkrwan1310 .
+//FORMERLY NAMED Relay_Lora.ino
 
 /*#ifndef BUILDPATH
 #define BUILDPATH (relative_path) "../" + relative_path
