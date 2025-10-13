@@ -1,9 +1,0 @@
-Arduino_Low_Power
-MKRWAN
-LoRa
-SD
-adafruit/Adafruit BusIO @ ^1.14.0
-RTCLib
-RTCZero
-Queue
-FlashStorage
