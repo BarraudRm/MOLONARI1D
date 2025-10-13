@@ -10,7 +10,9 @@
 
 #include BUILDPATH("../../field_code/libs/shared/protocols/LoRa/Lora.hpp")
 */
-#include "../../../field_code/libs/shared/protocols/LoRa/Lora.hpp" //WARNING : doesn't match with this adress but with build directory path that must be specified in arduino CLI build line.
+#include<Arduino.h>
+#include<SPI.h>
+//#include "Lora.hpp" //WARNING : doesn't match with this adress but with build directory path that must be specified in arduino CLI build line.
 
 #include <queue>
 
@@ -33,7 +35,9 @@ uint8_t MyAddres = 0xaa;
 uint8_t defaultdestination = 0xff;
 // Counter to rotate through test modes or other options (if applicable)
 uint8_t rotate = 0;
+main(){
 
+}
 void setup() {
   // Configure the built-in LED as output
   pinMode(LED_BUILTIN, OUTPUT);
@@ -67,7 +71,7 @@ void PrintQueue(std::queue<String> &receiveQueue)
   }
   LOG_LN("All data printed. Queue is now empty.");
 }
-
+/*
 // ----- Main loop -----
 void loop()
 {
@@ -105,3 +109,4 @@ void loop()
     }
   }
 }
+*/

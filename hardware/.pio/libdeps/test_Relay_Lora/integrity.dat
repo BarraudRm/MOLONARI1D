@@ -1,9 +1,9 @@
-Arduino_Low_Power
-SD
-SPI
 Queue
-RTCZero
+SD
+Arduino_Low_Power
+MKRWAN
+FlashStorage
+adafruit/Adafruit BusIO @ ^1.14.0
 LoRa
 RTCLib
-FlashStorage
-MKRWAN
+RTCZero
