@@ -5,54 +5,49 @@
 #include <LoRa.h>
 #include <queue>
 #include <unordered_set>
+
 enum RequestType : uint8_t {
-
-  SYN = 0xcc,
-  ACK = 0x33,
-  DATA = 0xc3,
-  FIN = 0x3c
-
+    SYN  = 0xcc,
+    ACK  = 0x33,
+    DATA = 0xc3,
+    FIN  = 0x3c
 };
 
-// MANQUE LA DECLARATION D'UNE CONSTANTE
+enum RoleType : uint8_t {
+    MASTER,
+    SLAVE
+};
+
+const int MAX_QUEUE_SIZE = 255; // Limite pour les queues
+
 class LoraCommunication {
 public:
-    LoraCommunication(long frequency, uint8_t localAdd , uint8_t desti);
+    LoraCommunication(long frequency, uint8_t localAdd, uint8_t desti, RoleType role);
 
-    // Method to start (initialize) LoRa
     void startLoRa();
-
-    // Method to stop (deactivate) LoRa
     void stopLoRa();
-// IL MANQUE LA FONCTION SETDESTTODEFAULT
-    // Send a structured packet
-    void sendPacket(const uint8_t packetNumber, const RequestType requestType, const String &payload);
+    void setdesttodefault();
 
-    // Receive and parse a structured packet
-    bool receivePacket(uint8_t &packetNumber,RequestType &requestType, String &payload);
-
+    // Communication
+    void sendPacket(uint8_t packetNumber, RequestType requestType, const String &payload);
+    bool receivePacket(uint8_t &packetNumber, RequestType &requestType, String &payload);
     bool isValidDestination(int recipient, int dest, RequestType requestType);
-
     uint8_t calculateChecksum(int recipient, int dest, uint8_t packetNumber, RequestType requestType, const String &payload);
-
-    // PAS LA MEME FONCTION APPELEE
-    bool performHandshake(int &shift);
-    
-    //PAS LA MEME FONCTION APPELEE
-    uint8_t sendPackets(std::queue<String> &sendQueue);
-
-    // PAS LA MEME NATURE D'OBJET EN ARGUMENT
-    void closeSession(uint8_t lastPacket);
-
-    // Method to check if LoRa is active
     bool isLoRaActive();
+
+    // Sessions
+    bool handshake(uint8_t &shift);
+    uint8_t sendPackets(std::queue<String> &sendQueue);
+    int receivePackets(std::queue<String> &receiveQueue);
+    void closeSession(int lastPacket);
 
 private:
     long freq;
     uint8_t localAddress;
     uint8_t destination;
-    bool active; // Internal flag to track whether LoRa is currently active
-    std::unordered_set<uint8_t> myNet = {0xaa}; // PAS LA MEME CHOSE ENTRE ACCOLADE
+    bool active;
+    RoleType deviceRole;
+    std::unordered_set<uint8_t> myNet = {0xaa, 0xbb, 0xcc};
 };
-#include "Lora.cpp"
-#endif // LORA_HPP
+
+#endif
