@@ -33,8 +33,8 @@ Required hardware :
 // ----- Imports -----
 #include <Arduino.h>
 
-#include "Lora.hpp"
-#include "Low_Power.cpp"
+#include "LoRa_Molonari.hpp"
+#include "Low_Power.hpp"
 #include "Pressure_Sensor.hpp"
 #include "Temp_Sensor.hpp"
 #include "Time.cpp"

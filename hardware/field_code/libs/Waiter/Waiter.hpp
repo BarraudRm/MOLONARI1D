@@ -1,13 +1,18 @@
 // This file defines the Waiter class, which helps manage time efficiently in the Arduino loop.
 // It includes low-power waiting and a way to ensure tasks run within a predictable time frame.
 
+// sleep until qui calcul ele temps qu'il reste avant de reveiller la carte arduino
+// on veut que la fonction prenne en argument en temps en ms et fasse dormir la carte ce temps là
+
+
+
 #ifndef WAITER_HPP
 #define WAITER_HPP
 
 #include <ArduinoLowPower.h>
 #include "Reader.hpp"
 #include "Low_Power.hpp"
-#include "Lora.hpp"
+#include "LoRa_Molonari.hpp"
 #include <queue>
 
 ////////////
