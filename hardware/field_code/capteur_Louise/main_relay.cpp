@@ -16,7 +16,7 @@ struct ConfigRelais {
 
 // ----- Variables globales -----
 ConfigRelais config = {5, 868E6, 10800}; // valeurs par défaut
-LoraCommunication lora(868E6, 0xAA, 0xFF);
+LoraCommunication lora(868E6, 0xAA, 0xFF); //regler les problemes !
 LoraWANCommunication loraWAN;
 std::queue<String> sendingQueue;
 
@@ -45,9 +45,9 @@ void lireConfigCSV(const char* NomFichier) {
         String key = line.substring(0, idx);
         String val = line.substring(idx + 1);
 
-        if (key == "appEui") config.appEui = val;
-        else if (key == "appKey") config.appKey = val;
-        else if (key == "CSPin") config.CSPin = val.toInt();
+        //if (key == "appEui") config.appEui = val;
+        //else if (key == "appKey") config.appKey = val;
+        if (key == "CSPin") config.CSPin = val.toInt();
         else if (key == "lora_freq") config.lora_freq = val.toInt();
         else if (key == "lora_intervalle_secondes") config.lora_intervalle_secondes = val.toInt();
     }
