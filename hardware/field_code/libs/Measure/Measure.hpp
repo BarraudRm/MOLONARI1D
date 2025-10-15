@@ -1,57 +1,49 @@
-// il faut faire attention à l'utilisation de double potentiellement utiliser des 'new' et 'delete' pour ne pas avoir de souci
-// This file defines the Measure class, which stores readings from all 4 sensors at a specific time.  
+// This file defines the Measure and Sensor class 
 
 #ifndef MEASURE_CLASS
 #define MEASURE_CLASS
 
+#include <Arduino.h>
+#include <string>
+#include <vector>
+typedef double MESURE;
+
+class Sensor {
+    public :
+        Sensor(); // Default constructor
+        // Initialise the sensor for the first time. 
+        // dataPin -> Analog input to read data from (Analog pin)
+        // enablePin -> Digital output to enable/disable the sensor 
+        Sensor(int dataPin, int enablePin, float offset, float scale, std::string type_capteur);
+        
+        // Measure the pressure
+        MESURE Measure();
+
+    private :
+        // Pin to read data from (Analog pin)
+        const int dataPin;
+        // Pin to enable/disable the sensor
+        const int enablePin;
+        const float offset;  
+        const float scale;
+        const std::string type_capteur;   
+};
 
 class Measure {
   public:
     // Unique ID for each measurement
     unsigned int id;
 
-    // Date in the format "dd/mm/yyyy"
-    char date[11];
+    String date;
+    String time;
+    unsigned long time_in_second;
 
-    // Time in the format "hh:mm:ss"
-    char time[9];
+    int ncapteur;
 
-// A PARTIR DE LA TOUT EST DIFFERENT MAIS J'AI L'IMPRESSION QUE CA FAIT LA MEME CHOSE EN PLUS 'SECURISE'
-
-    int npressure; // number of sensors
-    int ntemp; // number of sensors
-
-    double *chanelP; // pointer to the value of all the analogical sensors 
-    double *chanelT; // pointer to the value of all the analogical sensors 
-
-
-
+    std::vector<double> channel;
  
-    String oneLine() {
-      int i;
-      String str = String(id);                        // Add ID
-      str += " (" + String(date) + " " + String(time) + ") : ";      // Add timestamp
-      for (i = 0; i < npressure ; i++) {
-        str += String(chanelP[i]) + ", ";                             // Add sensor i data
-      }  
-      for (i = 0; i < ntemp-1 ; i++) {
-        str += String(chanelT[i]) + ", ";                             // Add sensor i data
-      }                             // Add sensor 3 data
-    str += String(chanelT[i]);                                        // Add last sensor data
-    
-    return str; // Return the constructed string
-    }
-
-    /**
-     * Convert the measurement details into a string representation.
-     * @return A string summarizing the measurement details.
-     */
-    String ToString() {
-      int i;
-      String str = "Measure n°" + oneLine();                                      // Add last sensor data
-    
-    return str; // Return the constructed string
-    }  
+    String oneLine();
+    String ToString();
 };
 
 #endif
