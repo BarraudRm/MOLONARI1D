@@ -1,3 +1,5 @@
+//FORMERLY Sensor_demo.ino, philosophically the main_sensor
+
 /*
 This firmware will be is meant for the arduino in the river bed of the Molonari system.
 

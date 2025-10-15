@@ -15,25 +15,27 @@
 # What we should have :
 ```
 hardware/field_code          # opposed to backend or data analysis code
-│                
+│
 ├── mains_ino/               # directory ONLY USED FOR .INO FILES
 │   ├── sensor/              # sensor ino code (codes if demo phase)
 │   ├── relay/               # relay ino code (codes if demo phase)
 │   └── gateway/             # gateway ino code (codes if demo phase)
 |
 └── libs/                    # Scientific computing engine
-    ├── shared/              # General utilities
-    |   ├── protocols/       # Communicaiton libraries
-    |   |   ├── LoRa         # LoRa C++ code
-    |   |   └── LoRaWan      # LoRaWan C++ code
-    |   └── ...              # some more if needeed
-    |                     
-    ├── sensors/              # libraries only useful for sensors
-    |   ├── sensors_common
-    |   ├── temperature
-    |   └── pressure
-    ├── relay/               # libraries only useful for relay
-    └── gateway/             # libraries only useful for gateway
+|   ├── shared/              # General utilities
+|   |   ├── protocols/       # Communicaiton libraries
+|   |   |   ├── LoRa         # LoRa C++ code
+|   |   |   └── LoRaWan      # LoRaWan C++ code
+|   |   └── ...              # some more if needeed
+|   |                     
+|   ├── sensors/              # libraries only useful for sensors
+|   |   ├── sensors_common
+|   |   ├── temperature
+|   |   └── pressure
+|   ├── relay/               # libraries only useful for relay
+|   └── gateway/             # libraries only useful for gateway
+|
+└── platformio.ini
 ```
 # Done : 
 
