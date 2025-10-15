@@ -35,7 +35,7 @@ const char filename[] = "RECORDS.CSV";
 
 LoraCommunication lora(868E6, 0x01, 0x02); // fréquence, adresse locale, adresse distante
 unsigned long lastLoRaSend = 0;
-unsigned long LORA_INTERVAL = 3UL * 3600UL * 1000UL; // initialisation par défaut
+unsigned long LORA_INTERVAL_S = 3UL * 3600UL; // initialisation par défaut
 unsigned long lastSDOffset = 0;
 std::queue<String> sendQueue;
 
@@ -57,9 +57,9 @@ void lireConfigCSV(const char* NomFichier) {
             //trouver la place de la virgule, notre séparateur : 
             int idx = line.indexOf(',');
             FREQUENCE_MINUTES = line.substring(idx + 1).toInt();
-        } else if (line.startsWith("lora_intervalle_heures")) {
+        } else if (line.startsWith("lora_intervalle_secondes")) {
             int idx = line.indexOf(',');
-            LORA_INTERVAL_H = line.substring(idx + 1).toInt();
+            LORA_INTERVAL_S = line.substring(idx + 1).toInt();
         } else {
             // Capteurs
             String tokens[5];
@@ -97,7 +97,7 @@ void setup() {
 
     // Lecture de la configuration CSV
     lireConfigCSV("capteurs_config.csv");
-    LORA_INTERVAL = LORA_INTERVAL_H * 3600UL * 1000UL;
+    int LORA_INTERVAL = LORA_INTERVAL_S;
 
     // Compter les capteurs
     int npressure = 0, ntemp = 0;
@@ -152,11 +152,13 @@ void loop() {
     }
 
     // --- Stocker sur SD ---
-    logger.LogData(pressure, temperature);
+    String date = GetCurrentDate();
+    String hour = GetCurrentHour();
+    logger.LogData(date, hour, pressure, temperature);
 
     // --- Envoyer LoRa si intervalle atteint ---
-    unsigned long currentMillis = millis();
-    if (currentMillis - lastLoRaSend >= LORA_INTERVAL) {
+    unsigned long current_Time=GetSecondsSinceMidnight();
+    if (current_Time - lastLoRaSend >= LORA_INTERVAL_S) {
         lora.startLoRa();
 
         // Lire nouvelles lignes depuis SD
@@ -185,7 +187,7 @@ void loop() {
         }
 
         lora.stopLoRa();
-        lastLoRaSend = currentMillis;
+        lastLoRaSend = current_Time;
     }
 
     // --- Sommeil jusqu'à prochaine mesure ---
