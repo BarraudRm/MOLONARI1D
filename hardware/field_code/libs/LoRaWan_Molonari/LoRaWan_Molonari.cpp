@@ -1,4 +1,4 @@
-#include "Lora.hpp"
+#include "LoRaWan_Molonari.hpp"
 
 #ifdef LORA_DEBUG
 #define LORA_LOG(msg) Serial.print(msg);

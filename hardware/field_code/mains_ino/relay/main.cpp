@@ -33,7 +33,7 @@ Required hardware :
 
 // ----- Dependencies -----
 
-#include "Lora.hpp"
+#include "LoRa_Molonari.hpp"
 #include "Waiter.hpp"
 #include <MKRWAN.h>
 

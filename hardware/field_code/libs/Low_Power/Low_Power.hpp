@@ -29,3 +29,4 @@ private :
 };
 
 // Create an instance of the class, so that the functions are accessible from outside the file
+#endif
