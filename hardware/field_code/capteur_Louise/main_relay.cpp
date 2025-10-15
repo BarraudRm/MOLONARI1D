@@ -46,9 +46,9 @@ void lireConfigCSV(const char* NomFichier) {
         String key = line.substring(0, idx);
         String val = line.substring(idx + 1);
 
-        if (key == "appEui") config.appEui = val;
-        else if (key == "appKey") config.appKey = val;
-        else if (key == "CSPin") config.CSPin = val.toInt();
+        //if (key == "appEui") config.appEui = val;
+        //else if (key == "appKey") config.appKey = val;
+        if (key == "CSPin") config.CSPin = val.toInt();
         else if (key == "lora_freq") config.lora_freq = val.toInt();
         else if (key == "lora_intervalle_secondes") config.lora_intervalle_secondes = val.toInt();
     }

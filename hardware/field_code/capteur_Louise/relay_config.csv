@@ -3,4 +3,5 @@
 #appKey,72C5FBBF2AB954D3316A1EE13AA3F141
 CSPin,5
 lora_freq,868000000
+#Envoi toutes les 3 heures:
 lora_intervalle_secondes,10800
