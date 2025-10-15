@@ -1,6 +1,14 @@
 // il faut faire attention à l'utilisation de double potentiellement utiliser des 'new' et 'delete' pour ne pas avoir de souci
 // This file defines the Measure class, which stores readings from all 4 sensors at a specific time.  
 
+// fusionner mesure pression et température 
+// fusionner temp_sensor, pressure_sensor et measure en un seul fichier measure
+// measure prend en argument le pin du port, et si c'est pression ou température, et comment tu transformes les tensions en mesure
+// les arguments à prendre sont : int _dataPin, int _enablePin, float _offset, float _scale comme dans temp sensor
+
+// renvoyer la valeur de la pression et celle de la température (dans temp sensor on fait ces calculs)
+// regarder ce que fait analog read 
+
 #ifndef MEASURE_CLASS
 #define MEASURE_CLASS
 
