@@ -82,7 +82,7 @@ public:
                 // Clean up
                 lora.stopLoRa();
                 reader.Dispose();
-
+                
                 return; // Exit since the task is done
             }
 

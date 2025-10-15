@@ -1,3 +1,5 @@
+// ALMOST GOOD : SAME AS SENSOR INTERNALS, ONLY DETAILS DIFFERENT FOR LORAWAN
+
 // This file is responsible of switching to low-power mode
 // See internals/Low_Power.hpp for the definitions.
 

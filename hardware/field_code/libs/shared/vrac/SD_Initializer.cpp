@@ -1,3 +1,6 @@
+// NOT COMPLETE AT ALL, USES STRING LIBRARY
+
+
 // This file will contain all the code to initialise the SD card and the CSV file.
 
 

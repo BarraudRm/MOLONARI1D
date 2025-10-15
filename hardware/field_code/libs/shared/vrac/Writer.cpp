@@ -1,3 +1,5 @@
+// NO GOOD USES LIBRARY "STRING.H" THAT IS NOT IMPORTED, AND SENSOR INTERNALS IS CLEARER
+
 // This file defines the Writer class, which is used to write a serie of measurements to a CSV file.
 // See internals/Writer.hpp for the class declarations.
 

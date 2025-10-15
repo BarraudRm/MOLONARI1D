@@ -1,3 +1,5 @@
+// GOOD FILE
+
 // Defines a class to manage waiting in a way that allows each iteration of the main loop to take the same amount of time.
 // This file provides an implementation of timed waiting that supports low-power mode for efficient power use.
 
@@ -72,7 +74,7 @@ public:
                 int nbofACK = lora.sendPackets(sendQueue);
                 //reader.UpdateCursor((int)sendQueue.size());
                 //PrintQueue(sendQueue);
-                lora.closeSession(nbofACK);
+                lora.closeSession(nbofACK); 
                 reader.UpdateCursor(nbofACK);
                 lora.stopLoRa();
                 reader.Dispose();
