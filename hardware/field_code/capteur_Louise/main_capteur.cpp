@@ -1,11 +1,12 @@
 #include <Arduino.h>
 #include <SD.h>
+#include <LoRa.h>
 #include <ArduinoLowPower.h>
 
 #include "Pressure_Sensor.hpp"
 #include "Temp_Sensor.hpp"
 #include "Writer.hpp"
-#include "Lora.hpp"
+#include "LoRa_Molonari.hpp"
 #include "Time.cpp"
 #include "Waiter.hpp"
 #include <queue>
@@ -75,7 +76,7 @@ void lireConfigCSV(const char* NomFichier) {
             c.id = tokens[0];
             c.type = tokens[1];
             // Conversion des pins A0-A5 en int
-            //important de laisser A0 en fin de ligne pour la ledcture de Analograead
+            //important de laisser A0 en fin de ligne pour la ledcture de Analogread ?
             if (tokens[2].startsWith("A")) c.pin = tokens[2].substring(1).toInt() + A0;
             else c.pin = tokens[2].toInt();
             c.offset = tokens[3].toFloat();
@@ -92,6 +93,7 @@ void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, HIGH);
 
+    //
     Serial.begin(115200);
     unsigned long end_date = millis() + 5000;
     while (!Serial && millis() < end_date) {}
@@ -174,7 +176,7 @@ void loop() {
             dataFile.close();
 
             int shift = 0;
-            if (lora.performHandshake(shift)) {
+            if (lora.handshake(shift)) {
                 if (!sendQueue.empty()) {
                     lora.sendPackets(sendQueue);  // vidée seulement après ACK
                     lora.closeSession(0);
