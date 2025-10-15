@@ -1,3 +1,5 @@
+// INCOMPLET PAR RAPPORT A INTERNALS
+
 // This file contains all the code relative to the measurement of pressure
 // See internals/Pressure_Sensor.hpp for the definitions.
 

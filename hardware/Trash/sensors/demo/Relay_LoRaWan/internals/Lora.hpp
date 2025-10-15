@@ -15,6 +15,8 @@ enum RequestType : uint8_t
   FIN = 0x3c
 
 };
+
+// DECLARATION D'UNE CONSTANTE EN PLUS
 const int MAX_QUEUE_SIZE = 255; // Queue size limit for the receiver
 class LoraCommunication
 {
@@ -27,7 +29,7 @@ public:
   // Method to stop (deactivate) LoRa
   void stopLoRa();
 
-  void setdesttodefault();
+  void setdesttodefault(); // FONCTION NON PRESENTE DANS L'AUTRE DOC
 
   // Send a structured packet
   void sendPacket(const uint8_t packetNumber, const RequestType requestType, const String &payload);
@@ -39,10 +41,13 @@ public:
 
   uint8_t calculateChecksum(int recipient, int dest, uint8_t packetNumber, RequestType requestType, const String &payload);
 
+  // PAS LA MEME FONCTION APPELEE
   bool Handshake(uint8_t shiftback);
 
+  //PAS LA MEME FONCTION APPELEE
   int receivePackets(std::queue<String> &receiveQueue);
 
+  // PAS LA MEME NATURE D'OBJET EN ARGUMENT
   void closeSession(int lastPacket);
 
   // Method to check if LoRa is active
@@ -53,7 +58,7 @@ private:
   uint8_t localAddress;
   uint8_t destination;
   bool active; // Internal flag to track whether LoRa is currently active
-  std::unordered_set<uint8_t> myNet = {0xbb, 0xcc};
+  std::unordered_set<uint8_t> myNet = {0xbb, 0xcc}; // PAS LA MEME CHOSE ENTRE ACCOLADE
 };
 #include "Lora.cpp"
 #endif // LORA_HPP

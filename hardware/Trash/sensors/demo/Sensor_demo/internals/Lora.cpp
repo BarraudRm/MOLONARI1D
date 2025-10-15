@@ -9,7 +9,6 @@
 #define LORA_LOG_HEX(msg)
 #define LORA_LOG_LN(msg)
 #endif
-
 // Constructor: Set pin and frequency for the LoRa module
 LoraCommunication::LoraCommunication(long frequency, uint8_t localAdd, uint8_t desti)
     : freq(frequency), localAddress(localAdd), destination(desti), active(false)
@@ -52,6 +51,8 @@ void LoraCommunication::stopLoRa()
     LORA_LOG_LN("LoRa stopped.");
   }
 }
+
+// IL MANQUE LA FONCITION setdesttodefault
 
 void LoraCommunication::sendPacket(uint8_t packetNumber, RequestType requestType, const String &payload)
 {
@@ -183,16 +184,22 @@ bool LoraCommunication::isLoRaActive()
   return active;
 }
 
+// LA FONCTION SUIVANTE N'A PAS LE MEME NOM
 bool LoraCommunication::performHandshake(int &shift)
 {
+// CE BOUT DE CODE N'EST PAS PRESENT DANS L'AUTRE 1
   sendPacket(0, SYN, "");
   LORA_LOG_LN("SYN sent, waiting for SYN-ACK...");
+//
 
   String payload;
   uint8_t packetNumber;
   RequestType requestType;
   int retries = 0;
 
+  // MANQUE UN BOUT DE CODE 2
+
+  // BOUCLE WHILE Y A RIEN QUI EST PAREIL !
   while (retries < 6)
     if (receivePacket(packetNumber, requestType, payload) && requestType == SYN)
     {
@@ -213,6 +220,7 @@ bool LoraCommunication::performHandshake(int &shift)
   return false;
 }
 
+// FONCTION NON PRESENTE DANS L'AUTRE DOCUMENT ET MANQUE RECEIVE
 uint8_t LoraCommunication::sendPackets(std::queue<String> &sendQueue)
 {
   uint8_t packetNumber = 0;
@@ -271,6 +279,7 @@ uint8_t LoraCommunication::sendPackets(std::queue<String> &sendQueue)
   return packetNumber;
 }
 
+// PAS LA MEME NATURE D'OBJET EN ARGUMENT
 void LoraCommunication::closeSession(uint8_t lastPacket)
 {
   sendPacket(lastPacket, FIN, "");
@@ -298,5 +307,4 @@ void LoraCommunication::closeSession(uint8_t lastPacket)
     }
   }
   LORA_LOG_LN("Session closure failed after retries.");
-
 }

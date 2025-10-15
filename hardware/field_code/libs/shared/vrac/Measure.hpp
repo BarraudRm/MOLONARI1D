@@ -1,3 +1,5 @@
+// TRES DIFFERENT DE SENSOR_DEMO/INTERNALS
+
 // This file defines the Measure class, which stores readings from all 4 sensors at a specific time.  
 
 // Check that the file has not been imported before
@@ -12,6 +14,8 @@ class Measure {
     char date[11];
     // Hour with the format "hh:mm:ss"
     char time[9];
+
+// A PARTIR DE LA TOUT EST DIFFERENT MAIS J'AI L'IMPRESSION QUE CA FAIT LA MEME CHOSE EN MOINS 'SECURISE'
 
     // Value read on each sensor
     MEASURE_T chanel1;

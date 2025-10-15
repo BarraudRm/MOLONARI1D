@@ -15,6 +15,8 @@ class Measure {
     // Time in the format "hh:mm:ss"
     char time[9];
 
+// A PARTIR DE LA TOUT EST DIFFERENT MAIS J'AI L'IMPRESSION QUE CA FAIT LA MEME CHOSE EN PLUS 'SECURISE'
+
     int npressure; // number of sensors
     int ntemp; // number of sensors
 

@@ -1,3 +1,4 @@
+// same as Relay_LoraWan/internals and Sensor_demo/internals
 // Contains a function to measure the amount of RAM available on the Arduino
 // TEST FILE FOR DEBUGGING PURPOSES ONLY
 

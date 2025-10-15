@@ -52,6 +52,7 @@ void LoraCommunication::stopLoRa()
     }
 }
 
+// LA FONCTION SUIVANTE N'EST PAS PRESENTE DANS L'AUTRE DOCUMENT
 void LoraCommunication::setdesttodefault()
 {
     if (destination != 0xff)
@@ -190,13 +191,16 @@ bool LoraCommunication::isLoRaActive()
     return active;
 }
 
+// LA FONCTION SUIVANTE N'A PAS LE MEME NOM 
 bool LoraCommunication::Handshake(uint8_t shiftback)
 {
+// IL MANQUE UN BOUT DE CODE 1
 
     String payload;
     uint8_t packetNumber;
     RequestType requestType;
 
+// CE BOUT DE CODE N'EST PAS PRESENT DANS L'AUTRE 2
     while (true)
     {
         if (receivePacket(packetNumber, requestType, payload) && requestType == SYN && packetNumber == 0 && destination != 0xff)
@@ -206,7 +210,9 @@ bool LoraCommunication::Handshake(uint8_t shiftback)
             break;
         }
     }
+//
 
+// BOUCLE WHILE Y A RIEN QUI EST PAREIL !
     int retries = 0;
     LORA_LOG_LN("SYN-ACK sent.");
     while (retries < 6)
@@ -230,6 +236,7 @@ bool LoraCommunication::Handshake(uint8_t shiftback)
     return false;
 }
 
+// FONCTION PAS PRESENTE DANS L'AUTRE DOC ET MANQUE SEND
 int LoraCommunication::receivePackets(std::queue<String> &receiveQueue)
 {
     uint8_t packetNumber = 0;
@@ -272,6 +279,7 @@ int LoraCommunication::receivePackets(std::queue<String> &receiveQueue)
     LORA_LOG_LN("Connection lost at packetNumber: " + String(packetNumber));
 }
 
+// PAS LA MEME NATURE D'OBJET EN ARGUMENT
 void LoraCommunication::closeSession(int lastPacket)
 {
     sendPacket(lastPacket, FIN, "");
