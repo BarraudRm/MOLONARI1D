@@ -1,3 +1,5 @@
+// QUITE DIFFERENT, DO NOT UNDERSTAND DOUBLE AU LIEU DE TEMP AS VARIABLE
+
 // This file contains all the code relative to the measurement of pressure
 // See internals/Temp_Sensor.hpp for the definitions.
 

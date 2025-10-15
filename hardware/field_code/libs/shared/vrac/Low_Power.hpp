@@ -1,3 +1,5 @@
+// ALMOST GOOD FILE : ONE LINE "#include "Low_Power.cpp" AT THE END OF INTERNALS LORAWAN
+
 // This file is responsible of switching to low-power mode
 // See internals/Low_Power.cpp for the implementation.
 

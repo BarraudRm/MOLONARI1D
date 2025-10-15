@@ -1,3 +1,5 @@
+// BAD FILE, SENSOR INTERNALS IS COMMENTED, SEEM TO BE TH ESAME CODE (TOP CHECK BEFORE DELETION)
+
 // This file will contain all the code to track time using the integrated Real Time Clock (RTC) of the MKR board and the external one.
 
 

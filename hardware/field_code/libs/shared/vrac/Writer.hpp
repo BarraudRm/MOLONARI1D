@@ -1,3 +1,5 @@
+// NOT THE SAME AS SENSOR INTERNALS, APPLYCONTENT ET LOGDATA ARE VERY DIFFERERENT (THIS ONE IS WEIRD ?)
+
 // This file defines the Writer class, which is used to write a series of measurements to a CSV file.
 // See internals/Writer.cpp for the implementations.
 
