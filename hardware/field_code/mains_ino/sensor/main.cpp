@@ -1,4 +1,4 @@
-//FORMERLY Sensor_demo.ino
+//FORMERLY Sensor_demo.ino, philosophically the main_sensor
 
 /*
 This firmware will be is meant for the arduino in the river bed of the Molonari system.
@@ -33,14 +33,14 @@ Required hardware :
 // ----- Imports -----
 #include <Arduino.h>
 #include "Lora.hpp"
-/*#include "Low_Power.cpp"
+#include "Low_Power.hpp"
 #include "Pressure_Sensor.hpp"
 #include "Temp_Sensor.hpp"
 #include "Time.cpp"
 #include "SD_Initializer.cpp"
 #include "Writer.hpp"
 #include "Waiter.hpp"
-#include <ArduinoLowPower.h>*/
+#include <ArduinoLowPower.h>
 // #include "internals/FreeMemory.cpp"
 
 

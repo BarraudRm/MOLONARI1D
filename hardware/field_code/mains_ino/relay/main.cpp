@@ -1,3 +1,4 @@
+//FORMERLY Relay_LoraWan_demo.ino
 /*
 This firmware will be is meant for the LoRa relay in the Molonari system.
 
@@ -32,8 +33,8 @@ Required hardware :
 
 // ----- Dependencies -----
 
-#include "internals/Lora.hpp"
-#include "internals/Waiter.hpp"
+#include "Lora.hpp"
+#include "Waiter.hpp"
 #include <MKRWAN.h>
 
 LoRaModem modem;
