@@ -29,6 +29,7 @@ Required hardware :
 
 
 // ----- Imports -----
+#include <Arduino.h>
 
 #include "../../../shared/Lora.hpp"
 #include "../../../shared/Low_Power.cpp"
@@ -207,6 +208,8 @@ void loop() {
     Serial.println("Transmitting data via LoRa...");
     waiter.delayUntil(300000);
     Serial.println("Data transmitted. Resetting measurement count.");
+
+    //ENVOIE DES DONNÉES
   }
 
   // Test code
