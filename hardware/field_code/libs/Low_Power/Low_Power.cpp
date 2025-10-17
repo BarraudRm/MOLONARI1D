@@ -16,13 +16,13 @@ MyLowPowerClass MyLowPower;
 // Switch to low-power mode for a given amount of time (in milli-seconds)
 void MyLowPowerClass::Sleep(uint32_t millis) {
   // Disable all power-consuming features
-  DisableAllIOPins();
+  //DisableAllIOPins();
 
   // Wait
   LowPower.deepSleep(millis);
 
   // Enable back all the features that werer disabled.
-  EnableAllIOPins();
+  //EnableAllIOPins();
 }
 
 
