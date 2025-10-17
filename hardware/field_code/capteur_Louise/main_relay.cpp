@@ -18,7 +18,7 @@ struct ConfigRelais {
 // ----- Variables globales -----
 ConfigRelais config = {
   "0000000000000000",
-  "72C5FBBF2AB954D3316A1EE13AA3F141",
+  "00112233445566778899aabbccddeeff",
   5,
   868E6,
   900
