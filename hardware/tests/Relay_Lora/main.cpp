@@ -10,11 +10,12 @@
 
 #include BUILDPATH("../../field_code/libs/shared/protocols/LoRa/Lora.hpp")
 */
+#include <queue>
+
 #include<Arduino.h>
 #include<SPI.h>
 //#include "Lora.hpp" //WARNING : doesn't match with this adress but with build directory path that must be specified in arduino CLI build line.
 
-#include <queue>
 
 // Uncomment this line to enable diagnostics log on serial for the main loop
 #define DEBUG

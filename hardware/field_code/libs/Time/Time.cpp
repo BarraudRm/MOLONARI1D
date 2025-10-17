@@ -1,9 +1,9 @@
 // This file contains all the code to manage time using the MKR board's integrated Real Time Clock (RTC) and an external RTC.
-
-#include "Time.hpp"
 #include <RTCZero.h>
 #include <RTClib.h>
 #include<vector>
+
+#include "Time.hpp"
 // Declare the RTC objects: internal (MKR) and external
 RTCZero internalRtc;
 RTC_PCF8523 externalRtc;

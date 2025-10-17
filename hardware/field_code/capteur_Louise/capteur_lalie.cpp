@@ -1,6 +1,9 @@
+#include <queue>
+#include <vector>
 #include <Arduino.h>
 #include <SD.h>
 #include <ArduinoLowPower.h>
+
 #include "Pressure_Sensor.hpp"
 #include "Temp_Sensor.hpp"
 #include "Writer.hpp"
@@ -9,8 +12,6 @@
 #include "Waiter.hpp"
 #include "Measure.hpp"
 
-#include <queue>
-#include <vector>
 
 // ----- Structures -----
 struct Capteur {

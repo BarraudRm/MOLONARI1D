@@ -9,11 +9,12 @@
 #ifndef WAITER_HPP
 #define WAITER_HPP
 
+#include <queue>
+
 #include <ArduinoLowPower.h>
 #include "Reader.hpp"
 #include "Low_Power.hpp"
 #include "LoRa_Molonari.hpp"
-#include <queue>
 
 ////////////
 // Helper function to print the contents of a queue for debugging or logging
