@@ -1,11 +1,9 @@
 // This file contains all the code to manage time using the MKR board's integrated Real Time Clock (RTC) and an external RTC.
-
-#ifndef MY_TIME
-#define MY_TIME
-
 #include <RTCZero.h>
 #include <RTClib.h>
+#include<vector>
 
+#include "Time.hpp"
 // Declare the RTC objects: internal (MKR) and external
 RTCZero internalRtc;
 RTC_PCF8523 externalRtc;
@@ -85,7 +83,7 @@ unsigned long GetSecondsSinceMidnight() {
 // Handles intervals and timing for periodic measurements throughout the day
 const int MEASURE_INTERVAL_MINUTES = 15; // Interval between measurements
 const int TOTAL_MEASUREMENTS_PER_DAY = 1440 / MEASURE_INTERVAL_MINUTES; // Total measurements in a day
-unsigned int measurementTimes[TOTAL_MEASUREMENTS_PER_DAY]; // Store times for each measurement
+std::vector<unsigned int> measurementTimes (TOTAL_MEASUREMENTS_PER_DAY); // Store times for each measurement
 int measurementCount = 0;
 
 // Initialize the array with all the measurement times (in seconds from midnight)
@@ -127,4 +125,3 @@ unsigned long CalculateSleepTimeUntilNextMeasurement() {
   return (nextDayFirstTime - currentTime) * 1000;
 }
 
-#endif // MY_TIME

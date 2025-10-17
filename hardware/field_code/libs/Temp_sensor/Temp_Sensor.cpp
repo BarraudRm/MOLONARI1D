@@ -5,8 +5,9 @@
 #ifndef TEMP_SENSOR
 #define TEMP_SENSOR
 
-#include "Temp_Sensor.hpp"
 #include <cmath>
+
+#include "Temp_Sensor.hpp"
 
 // Initialise the temperature sensor for the first time. 
 TemperatureSensor::TemperatureSensor() : dataPin(-1), enablePin(-1), offset(-1), scale(-1) {

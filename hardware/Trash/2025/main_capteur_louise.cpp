@@ -1,10 +1,12 @@
 #include <Arduino.h>
 #include <SD.h>
+#include <LoRa.h>
 #include <ArduinoLowPower.h>
+
 #include "Pressure_Sensor.hpp"
 #include "Temp_Sensor.hpp"
 #include "Writer.hpp"
-#include "Lora.hpp"
+#include "LoRa_Molonari.hpp"
 #include "Time.cpp"
 #include "Waiter.hpp"
 #include <queue>
@@ -24,8 +26,10 @@ std::vector<Capteur> liste_capteurs; // Capteurs lus depuis CSV
 int FREQUENCE_MINUTES = 15; //initialisation par défaut
 int LORA_INTERVAL_H = 3;//initialisation par défaut
 
-Measure **sens;
-double *toute_mesure;
+PressureSensor **pSens;
+TemperatureSensor **tempSensors;
+double *pressure;
+double *temperature;
 
 Writer logger;
 const int CSPin = 5;
@@ -72,7 +76,7 @@ void lireConfigCSV(const char* NomFichier) {
             c.id = tokens[0];
             c.type = tokens[1];
             // Conversion des pins A0-A5 en int
-            //important de laisser A0 en fin de ligne pour la ledcture de Analograead
+            //important de laisser A0 en fin de ligne pour la ledcture de Analogread ?
             if (tokens[2].startsWith("A")) c.pin = tokens[2].substring(1).toInt() + A0;
             else c.pin = tokens[2].toInt();
             c.offset = tokens[3].toFloat();
@@ -89,6 +93,7 @@ void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, HIGH);
 
+    //
     Serial.begin(115200);
     unsigned long end_date = millis() + 5000;
     while (!Serial && millis() < end_date) {}
@@ -98,21 +103,30 @@ void setup() {
     int LORA_INTERVAL = LORA_INTERVAL_S;
 
     // Compter les capteurs
-    int ncapteur = 0; 
+    int npressure = 0, ntemp = 0;
     for (auto &c : liste_capteurs) {
-        ncapteur++
+        if (c.type == "pression") npressure++;
+        else if (c.type == "temperature") ntemp++;
     }
 
     // Allocation dynamique
-    sens = new Sensor*[ncapteur];
-    toute_mesure = new double[ncapteur];
+    pSens = new PressureSensor*[npressure];
+    tempSensors = new TemperatureSensor*[ntemp];
+    pressure = new double[npressure];
+    temperature = new double[ntemp];
 
     // Initialisation des capteurs
-    int it = 0;
+    int ip = 0, it = 0;
     for (auto &c : liste_capteurs) {
-        Sensors[it] = new Sensor(c.pin, 1, c.offset, c.scale, c.type);
-        toute_mesure[it] = 0;
-        it++;
+        if (c.type == "pression") {
+            pSens[ip] = new PressureSensor(c.pin, 1);
+            pressure[ip] = 0;
+            ip++;
+        } else if (c.type == "temperature") {
+            tempSensors[it] = new TemperatureSensor(c.pin, 1, c.offset, c.facteur);
+            temperature[it] = 0;
+            it++;
+        }
     }
 
     // Initialisation SD et logger
@@ -129,14 +143,21 @@ void loop() {
     digitalWrite(LED_BUILTIN, HIGH);
 
     // --- Prendre mesures ---
-    int ncapt = 0;
+    int npressure = 0, ntemp = 0;
     for (auto &c : liste_capteurs) {
-        toute_mesure[ncapt] = sens[ncapt]->Mesure();
-        ncapt++;
+        if (c.type == "pression") {
+            pressure[npressure] = pSens[npressure]->MeasurePressure();
+            npressure++;
+        } else if (c.type == "temperature") {
+            temperature[ntemp] = tempSensors[ntemp]->MeasureTemperature();
+            ntemp++;
         }
-    
+    }
+
     // --- Stocker sur SD ---
-    logger.LogData(ncapteur, *toute_mesure); // LogData est dans writer
+    String date = GetCurrentDate();
+    String hour = GetCurrentHour();
+    logger.LogData(date, hour, pressure, temperature);
 
     // --- Envoyer LoRa si intervalle atteint ---
     unsigned long current_Time=GetSecondsSinceMidnight();
@@ -155,7 +176,7 @@ void loop() {
             dataFile.close();
 
             int shift = 0;
-            if (lora.performHandshake(shift)) {
+            if (lora.handshake(shift)) {
                 if (!sendQueue.empty()) {
                     lora.sendPackets(sendQueue);  // vidée seulement après ACK
                     lora.closeSession(0);

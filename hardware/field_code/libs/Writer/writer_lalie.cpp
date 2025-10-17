@@ -5,13 +5,14 @@
 #ifndef WRITER_CLASS
 #define WRITER_CLASS
 
-#include "writer_lalie.hpp"
-#include "Time.cpp"
-#include "Measure.cpp"
-#include "Measure.hpp"
-
 #include <Arduino.h>
 #include <SD.h>
+#include <string>
+
+#include "writer_lalie.hpp"
+#include "Time.cpp"
+#include "Measure.hpp"
+
 
 #ifdef SD_DEBUG
 #define SD_LOG(msg) Serial.print(msg)
@@ -22,7 +23,7 @@
 #endif
 
 // Define a comma string for separating CSV columns
-const String COMA = String(',');
+const std::string COMA = ",";
 
 // GetNextLine function: Returns the number of lines in the CSV file, representing the next ID.
 // SHOULD BE CALLED ONLY ONCE to initialize next_id
@@ -57,7 +58,7 @@ void Writer::WriteInNewLine(Measure data){
     SD_LOG("Writing data ..."); // Debug log
     // Write measurement data as a single CSV line
     //this->file.println(String(data.id)+ COMA + data.date + COMA + data.time + COMA + String(data.chanel1) + COMA + String(data.chanel2) + COMA + String(data.chanel3) + COMA + String(data.chanel4));
-    this->file.println(data.ToString()); // Write the string representation of the measurement
+    this->file.println(data.ToString()); // CHANGE TOSTRING TO USE STD::STRING
     SD_LOG_LN(" Done");
 
     SD_LOG("Flushing ..."); // Ensure data is saved immediately
@@ -69,7 +70,7 @@ void Writer::WriteInNewLine(Measure data){
 void Writer::ApplyContent(Measure* measure, int ncapteur, double  *toute_mesure) {
     
     for(int i = 0; i < ncapteur; i++) {
-        measure->channel.push_back(toute_mesure[i]); // Assign pressure values
+        measure->channel.push_back(toute_mesure[i]); // Assign  values
     
     }
 }
