@@ -136,7 +136,6 @@ void loop() {
         }
     
     // --- Stocker sur SD ---
-
     logger.LogData(ncapt, toute_mesure); // LogData est dans writer
 
     // --- Envoyer LoRa si intervalle atteint ---

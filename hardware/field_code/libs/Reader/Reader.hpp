@@ -5,7 +5,6 @@
 #define READER_CLASS_H
 
 #include <SD.h>
-#include "Measure.hpp"
 
 // The name of the CSV file to read
 extern const char filename[];
@@ -65,8 +64,5 @@ class Reader
          */
         void Dispose();
 };
-
-// Include the implementation of the Reader class
-#include "Reader.cpp"
 
 #endif // READER_CLASS_H
