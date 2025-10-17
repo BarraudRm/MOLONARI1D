@@ -14,7 +14,7 @@
 
 
 // ----- Structures -----
-struct Sensor {
+struct SensorConfig {
     String id;
     String type; // "Pression ou Thermistance ou Thermocouple"
     int pin;
@@ -23,7 +23,7 @@ struct Sensor {
 };
 
 // ----- Variables globales -----
-std::vector<Sensor> liste_capteurs; // Capteurs lus depuis CSV
+std::vector<SensorConfig> liste_capteurs; // Capteurs lus depuis CSV
 int FREQUENCE_MINUTES = 15; //initialisation par défaut
 int LORA_INTERVAL_H = 3;//initialisation par défaut
 
@@ -71,7 +71,7 @@ void lireConfigCSV(const char* NomFichier) {
                 tokens[tokenIdx++] = line.substring(first, last);
                 first = last + 1;
             }
-            Sensor c;
+            SensorConfig c;
             c.id = tokens[0];
             c.type = tokens[1];
             // Conversion des pins A0-A5 en int
@@ -139,9 +139,7 @@ void loop() {
         }
     
     // --- Stocker sur SD ---
-    String date = GetCurrentDate();
-    String hour = GetCurrentHour();
-    logger.LogData(date, hour, *toute_mesure); // LogData est dans writer
+    logger.LogData(ncapt, toute_mesure); // LogData est dans writer
 
     // --- Envoyer LoRa si intervalle atteint ---
     unsigned long current_Time=GetSecondsSinceMidnight();
@@ -159,7 +157,7 @@ void loop() {
             unsigned long currentOffset = dataFile.position();
             dataFile.close();
 
-            int shift = 0;
+            uint8_t shift = 0;
             if (lora.handshake(shift)) {
                 if (!sendQueue.empty()) {
                     lora.sendPackets(sendQueue);  // vidée seulement après ACK
