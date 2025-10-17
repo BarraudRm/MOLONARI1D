@@ -32,6 +32,7 @@ Required hardware :
 
 // ----- Imports -----
 #include <Arduino.h>
+#include <ArduinoLowPower.h>
 
 #include "LoRa_Molonari.hpp"
 #include "Low_Power.hpp"
@@ -41,7 +42,6 @@ Required hardware :
 #include "SD_Initializer.cpp"
 #include "Writer.hpp"
 #include "Waiter.hpp"
-#include <ArduinoLowPower.h>
 // #include "internals/FreeMemory.cpp"
 
 

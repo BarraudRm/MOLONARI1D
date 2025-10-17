@@ -2,6 +2,8 @@
 #include <SD.h>
 #include <LoRa.h>
 #include <ArduinoLowPower.h>
+#include <queue>
+#include <vector>
 
 #include "Pressure_Sensor.hpp"
 #include "Temp_Sensor.hpp"
@@ -9,8 +11,6 @@
 #include "LoRa_Molonari.hpp"
 #include "Time.cpp"
 #include "Waiter.hpp"
-#include <queue>
-#include <vector>
 
 // ----- Structures -----
 struct Capteur {

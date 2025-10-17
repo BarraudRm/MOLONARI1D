@@ -5,9 +5,10 @@
 #define READER_CLASS
 
 #include <SD.h>
+#include <queue>
+
 #include "Measure.hpp"
 #include "Reader.hpp"
-#include <queue>
 
 // Debugging macros for logging SD operations
 #ifdef SD_DEBUG

@@ -5,12 +5,13 @@
 #ifndef WRITER_CLASS
 #define WRITER_CLASS
 
+#include <Arduino.h>
+#include <SD.h>
+
 #include "writer_lalie.hpp"
 #include "Time.cpp"
 #include "Measure.hpp"
 
-#include <Arduino.h>
-#include <SD.h>
 
 #ifdef SD_DEBUG
 #define SD_LOG(msg) Serial.print(msg)

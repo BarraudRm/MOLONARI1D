@@ -33,9 +33,10 @@ Required hardware :
 
 // ----- Dependencies -----
 
+#include <MKRWAN.h>
+
 #include "LoRa_Molonari.hpp"
 #include "Waiter.hpp"
-#include <MKRWAN.h>
 
 LoRaModem modem;
 std::queue<String> sendingQueue;
