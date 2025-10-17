@@ -1,3 +1,5 @@
+#include <queue>
+#include <vector>
 #include <Arduino.h>
 #include <SD.h>
 #include <Lora.h>
@@ -11,8 +13,6 @@
 #include "Waiter.hpp"
 #include "Measure.hpp"
 
-#include <queue>
-#include <vector>
 
 // ----- Structures -----
 struct Capteur {
@@ -76,7 +76,7 @@ void lireConfigCSV(const char* NomFichier) {
             c.id = tokens[0];
             c.type = tokens[1];
             // Conversion des pins A0-A5 en int
-            //important de laisser A0 en fin de ligne pour la ledcture de Analogread ?
+            //important de laisser A0 en fin de ligne pour la ledcture de Analograead
             if (tokens[2].startsWith("A")) c.pin = tokens[2].substring(1).toInt() + A0;
             else c.pin = tokens[2].toInt();
             c.offset = tokens[3].toFloat();
@@ -142,7 +142,7 @@ void loop() {
     // --- Stocker sur SD ---
     String date = GetCurrentDate();
     String hour = GetCurrentHour();
-    logger.LogData(date, hour, *toute_mesure);
+    logger.LogData(date, hour, *toute_mesure); // LogData est dans writer
 
     // --- Envoyer LoRa si intervalle atteint ---
     unsigned long current_Time=GetSecondsSinceMidnight();
