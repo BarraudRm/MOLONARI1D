@@ -17,7 +17,7 @@ struct ConfigRelais {
 
 // ----- Variables globales -----
 ConfigRelais config = {"0000000000000000", "72C5FBBF2AB954D3316A1EE13AA3F141", 5, 868E6, 900}; // valeurs par défaut
-LoraCommunication lora(868E6, 0xAA, 0xFF); //regler les problemes !
+LoraCommunication lora(868E6, 0xAA, 0xFF, RoleType::SLAVE);
 LoraWANCommunication loraWAN;
 std::queue<String> sendingQueue;
 
