@@ -1,7 +1,5 @@
 // This file contains all the code to manage time using the MKR board's integrated Real Time Clock (RTC) and an external RTC.
 
-#ifndef MY_TIME
-#define MY_TIME
 #include "Time.hpp"
 #include <RTCZero.h>
 #include <RTClib.h>
@@ -127,4 +125,3 @@ unsigned long CalculateSleepTimeUntilNextMeasurement() {
   return (nextDayFirstTime - currentTime) * 1000;
 }
 
-#endif // MY_TIME

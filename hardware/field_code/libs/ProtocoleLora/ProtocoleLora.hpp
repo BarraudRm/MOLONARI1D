@@ -1,5 +1,5 @@
-#ifndef LORA_HPP
-#define LORA_HPP
+#ifndef PROTOCOLE_LORA_HPP
+#define PROTOCOLE_LORA_HPP
 
 #include <Arduino.h>
 #include <LoRa.h>
