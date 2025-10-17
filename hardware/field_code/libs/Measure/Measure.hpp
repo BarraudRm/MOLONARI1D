@@ -12,8 +12,11 @@
 #define MEASURE_CLASS
 
 #include <Arduino.h>
-#include <string>
 #include <vector>
+#include <string>
+
+
+
 typedef double MESURE;
 
 class Sensor {
