@@ -27,7 +27,7 @@ std::vector<Capteur> liste_capteurs; // Capteurs lus depuis CSV
 int FREQUENCE_MINUTES = 15; //initialisation par défaut
 int LORA_INTERVAL_H = 3;//initialisation par défaut
 
-Measure **sens;
+Sensor** sens;
 double *toute_mesure;
 
 Writer logger;
@@ -113,7 +113,7 @@ void setup() {
     // Initialisation des capteurs
     int it = 0;
     for (auto &c : liste_capteurs) {
-        Sensors[it] = new Sensor(c.pin, 1, c.offset, c.scale, c.type);
+        sens[it] = new Sensor(c.pin, 1, c.offset, c.scale, c.type);
         toute_mesure[it] = 0;
         it++;
     }
