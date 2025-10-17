@@ -11,9 +11,9 @@
 #ifndef MEASURE_CLASS
 #define MEASURE_CLASS
 
-#include <Arduino.h>
 #include <vector>
 #include <string>
+#include <Arduino.h>
 
 
 
@@ -45,16 +45,16 @@ class Measure {
     // Unique ID for each measurement
     unsigned int id;
 
-    String date;
-    String time;
+    std::string date;
+    std::string time;
     unsigned long time_in_second;
 
     int ncapteur;
 
     std::vector<double> channel;
  
-    String oneLine();
-    String ToString();
+    std::string oneLine();
+    std::string ToString();
 };
 
 #endif

@@ -1,5 +1,5 @@
 #include "Measure.hpp"
-#include "Time.cpp"
+#include "Time.hpp"
 
 // Initialise the temperature sensor for the first time. 
 Sensor::Sensor() : dataPin(-1), enablePin(-1), offset(-1), scale(-1), type_capteur("-1") {
