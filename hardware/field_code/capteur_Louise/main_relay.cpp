@@ -11,17 +11,27 @@ struct ConfigRelais {
     String appEui;
     String appKey;
     int CSPin;
-    int lora_freq;
+    long lora_freq;
     int lora_intervalle_secondes;
 };
 
 // ----- Variables globales -----
-ConfigRelais config = {"0000000000000000", "72C5FBBF2AB954D3316A1EE13AA3F141", 5, 868E6, 900}; // valeurs par défaut
-LoraCommunication lora(868E6, 0xAA, 0xFF, RoleType::MASTER); //regler les problemes !
+ConfigRelais config = {
+  "0000000000000000",
+  "72C5FBBF2AB954D3316A1EE13AA3F141",
+  5,
+  868E6,
+  900
+};
+
+LoraCommunication lora(config.lora_freq, 0xAA, 0xFF, RoleType::MASTER);
+
 LoraWANCommunication loraWAN;
 std::queue<String> sendingQueue;
 
 unsigned long lastLoraSend = 0;
+unsigned long lastAttempt = 0;
+
 
 // ----- Lecture CSV -----
 void lireConfigCSV(const char* NomFichier) {
@@ -49,7 +59,7 @@ void lireConfigCSV(const char* NomFichier) {
         if (key == "appEui") config.appEui = val;
         else if (key == "appKey") config.appKey = val;
         else if (key == "CSPin") config.CSPin = val.toInt();
-        else if (key == "lora_freq") config.lora_freq = val.toInt();
+        else if (key == "lora_freq") config.lora_freq = val.toFloat();
         else if (key == "lora_intervalle_secondes") config.lora_intervalle_secondes = val.toInt();
     }
     f.close();
@@ -89,11 +99,9 @@ void loop() {
     Waiter waiter;
     waiter.startTimer();
     // Si 3/4 du temps d’intervalle est écoulé depuis la dernière tentative LoRa
-    unsigned long wakeUpDelay = (unsigned long)(config.lora_intervalle_secondes * 0.75 * 1000);
-    //tout en ms pour le waiter
-
 
     unsigned long currentTime = millis();
+    unsigned long wakeUpDelay = (unsigned long)(config.lora_intervalle_secondes * 0.75 * 1000UL);  // en ms
     if (currentTime - lastAttempt >= wakeUpDelay) {
 
         std::queue<String> receiveQueue;

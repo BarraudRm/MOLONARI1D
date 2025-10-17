@@ -3,7 +3,6 @@
 #include <ArduinoLowPower.h>
 
 #include "Waiter.hpp"
-#include "Low_Power.hpp" 
 #include "Reader.hpp"
 #include "LoRa_Molonari.hpp"
 
@@ -39,7 +38,7 @@ void Waiter::sleepUntil(unsigned long desired_waiting_time) {
 }
 
 // Wait without sleeping to handle other tasks
-void Waiter::delayUntil(unsigned long desired_waiting_time, RoleType role) {
+void Waiter::delayUntil(uint32_t desired_waiting_time, int role) {
     unsigned long end_date = starting_time + desired_waiting_time;
 
     // Loop until the time is up
@@ -47,7 +46,7 @@ void Waiter::delayUntil(unsigned long desired_waiting_time, RoleType role) {
         Serial.println("Starting new communication session...");
 
         // Set up LoRa communication
-        LoraCommunication lora(868E6, 0xbb, 0xaa, role);
+        LoraCommunication lora(868E6, 0xbb, 0xaa, static_cast<RoleType>(role));
         Reader reader;
         lora.startLoRa();
         uint8_t shift = 0;
