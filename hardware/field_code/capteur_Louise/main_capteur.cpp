@@ -11,19 +11,17 @@
 #include "Time.hpp"
 #include "Waiter.hpp"
 
-
-
-// ----- Structures -----
-struct SensorConfig {
-    String id;
-    String type; // "Pression ou Thermistance ou Thermocouple"
-    int pin;
-    float offset;
-    float scale;
-};
+ // ----- Structures -----
+ struct SensorConfig {
+     String id;
+     String type; // "Pression ou Thermistance ou Thermocouple"
+     int pin;
+     float offset;
+     float scale;
+ };
 
 // ----- Variables globales -----
-std::vector<SensorConfig> liste_capteurs; // Capteurs lus depuis CSV
+ std::vector<SensorConfig> liste_capteurs; // Capteurs lus depuis CSV
 int FREQUENCE_MINUTES = 15; //initialisation par défaut
 int LORA_INTERVAL_H = 3;//initialisation par défaut
 
@@ -34,7 +32,7 @@ Writer logger;
 const int CSPin = 5;
 const char filename[] = "RECORDS.CSV";
 
-LoraCommunication lora(868E6, 0x01, 0x02, RoleType::MASTER); // fréquence, adresse locale, adresse distante
+LoraCommunication lora(868E6, 0x01, 0x02, RoleType::SLAVE); // fréquence, adresse locale, adresse distante
 unsigned long lastLoRaSend = 0;
 unsigned long LORA_INTERVAL_S = 3UL * 3600UL; // initialisation par défaut
 unsigned long lastSDOffset = 0;
@@ -71,16 +69,16 @@ void lireConfigCSV(const char* NomFichier) {
                 tokens[tokenIdx++] = line.substring(first, last);
                 first = last + 1;
             }
-            SensorConfig c;
-            c.id = tokens[0];
-            c.type = tokens[1];
-            // Conversion des pins A0-A5 en int
-            //important de laisser A0 en fin de ligne pour la ledcture de Analograead
-            if (tokens[2].startsWith("A")) c.pin = tokens[2].substring(1).toInt() + A0;
-            else c.pin = tokens[2].toInt();
-            c.offset = tokens[3].toFloat();
-            c.scale = tokens[4].toFloat();
-            liste_capteurs.push_back(c);
+             SensorConfig c;
+             c.id = tokens[0];
+             c.type =tokens[1];
+             // Conversion des pins A0-A5 en int
+             //important de laisser A0 en fin de ligne pour la ledcture de Analograead
+             if (tokens[2].startsWith("A")) c.pin = tokens[2].substring(1).toInt() + A0;
+             else c.pin = tokens[2].toInt();
+             c.offset = tokens[3].toFloat();
+             c.scale = tokens[4].toFloat();
+             liste_capteurs.push_back(c);
         }
     }
     f.close();
@@ -97,7 +95,7 @@ void setup() {
     while (!Serial && millis() < end_date) {}
 
     // Lecture de la configuration CSV
-    lireConfigCSV("capteurs_config.csv");
+    lireConfigCSV("config.csv");
     int LORA_INTERVAL = LORA_INTERVAL_S;
 
     // Compter les capteurs
