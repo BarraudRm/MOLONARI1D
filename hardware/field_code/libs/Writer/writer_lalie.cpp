@@ -38,16 +38,10 @@ unsigned int GetNextLine() {
       if (readInfile.read() == '\n') {
         number_of_lines++;
       }
-    }
+    } 
   }
   readInfile.close();
   return number_of_lines;
-}
-
-// ApplyCurrentTime function: Sets the current date and time in the Measure object
-void ApplyCurrentTime(Measure* measure) {
-    GetCurrentHour().toCharArray(measure->time, 9);
-    GetCurrentDate().toCharArray(measure->date, 11);
 }
 
 //Class methods
@@ -70,8 +64,7 @@ void Writer::WriteInNewLine(Measure data){
 void Writer::ApplyContent(Measure* measure, int ncapteur, double  *toute_mesure) {
     
     for(int i = 0; i < ncapteur; i++) {
-        measure->channel.push_back(toute_mesure[i]); // Assign  values
-    
+        measure->channel.push_back(toute_mesure[i]); // Assign  values    
     }
 }
 
@@ -99,7 +92,6 @@ void Writer::LogData(int ncapteur, double *toute_mesure) {
     // Create a new Measure object
     Measure data;
     this->ApplyContent(&data,ncapteur, toute_mesure); // Assign channel values
-    ApplyCurrentTime(&data); // Assign current time and date
     data.id = this->next_id; // Set unique ID for the measurement
 
     // Check if the connection is still established
