@@ -7,7 +7,6 @@
 
 #include "writer_lalie.hpp"
 #include "Time.cpp"
-#include "Measure.cpp"
 #include "Measure.hpp"
 
 #include <Arduino.h>
@@ -69,7 +68,7 @@ void Writer::WriteInNewLine(Measure data){
 void Writer::ApplyContent(Measure* measure, int ncapteur, double  *toute_mesure) {
     
     for(int i = 0; i < ncapteur; i++) {
-        measure->channel.push_back(toute_mesure[i]); // Assign pressure values
+        measure->channel.push_back(toute_mesure[i]); // Assign  values
     
     }
 }

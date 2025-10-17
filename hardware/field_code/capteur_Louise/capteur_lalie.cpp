@@ -4,9 +4,11 @@
 #include "Pressure_Sensor.hpp"
 #include "Temp_Sensor.hpp"
 #include "Writer.hpp"
-#include "Lora.hpp"
-#include "Time.cpp"
+#include "LoRa_Molonari.hpp"
+#include "Time.hpp"
 #include "Waiter.hpp"
+#include "Measure.hpp"
+
 #include <queue>
 #include <vector>
 
