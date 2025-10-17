@@ -11,8 +11,6 @@
 #include "Time.hpp"
 #include "Waiter.hpp"
 
-
-
  // ----- Structures -----
  struct SensorConfig {
      String id;
@@ -139,8 +137,7 @@ void loop() {
         }
     
     // --- Stocker sur SD ---
-    String date = GetCurrentDate();
-    String hour = GetCurrentHour();
+
     logger.LogData(ncapt, toute_mesure); // LogData est dans writer
 
     // --- Envoyer LoRa si intervalle atteint ---
