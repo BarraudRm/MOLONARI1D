@@ -34,7 +34,7 @@ Writer logger;
 const int CSPin = 5;
 const char filename[] = "RECORDS.CSV";
 
-LoraCommunication lora(868E6, 0x01, 0x02, RoleType::MASTER); // fréquence, adresse locale, adresse distante
+LoraCommunication lora(868E6, 0x01, 0x02, RoleType::SLAVE); // fréquence, adresse locale, adresse distante
 unsigned long lastLoRaSend = 0;
 unsigned long LORA_INTERVAL_S = 3UL * 3600UL; // initialisation par défaut
 unsigned long lastSDOffset = 0;
