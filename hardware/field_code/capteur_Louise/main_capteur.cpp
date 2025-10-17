@@ -5,8 +5,6 @@
 #include <Lora.h>
 #include <ArduinoLowPower.h>
 
-#include "Pressure_Sensor.hpp"
-#include "Temp_Sensor.hpp"
 #include "Writer.hpp"
 #include "LoRa_Molonari.hpp"
 #include "Time.hpp"
@@ -104,7 +102,7 @@ void setup() {
     // Compter les capteurs
     int ncapteur = 0; 
     for (auto &c : liste_capteurs) {
-        ncapteur++
+        ncapteur++;
     }
 
     // Allocation dynamique
