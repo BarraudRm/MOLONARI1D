@@ -2,8 +2,8 @@
 // See internals/Writer.cpp for the implementations.
 
 // Ensure that this file is only included once in compilation
-#ifndef WRITER_EULALIE_CLASS_H
-#define WRITER_EULALIE_CLASS_H
+#ifndef WRITER_CLASS_H
+#define WRITER_CLASS_H
 
 #include <SD.h>
 #include "Measure.hpp"
@@ -23,7 +23,7 @@ class Writer
         void WriteInNewLine(Measure data);
 
         // Populate a Measure object using the raw data provided
-        void ApplyContent(Measure* measure, int ncapteur, double *toute_mesure);
+        void ApplyContent(Measure* measure, int npressure, double *pressure, int ntemp, double *temp);
 
         // Attempt to reconnect to the SD card if the connection is lost
         bool Reconnect();
@@ -34,7 +34,7 @@ class Writer
 
         // Process raw data and append it as a new entry in the CSV file
         // NF 29/4/2025 modification to pass 
-        void LogData(int ncapteur, double *toute_mesure);
+        void LogData(int npressure, double *pressure, int ntemp, double *temperature);
 
         // Safely close the connection with the SD card
         void Dispose();
