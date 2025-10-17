@@ -8,5 +8,5 @@ T5,temperature,A5,0.5300,102.00
 
 # Configuration générale
 mesure_frequence_minutes,15
-lora_intervalle_secondes,10800
+lora_intervalle_secondes,900 
 
