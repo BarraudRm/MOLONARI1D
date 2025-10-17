@@ -10,7 +10,7 @@
 #include <string>
 
 #include "writer_lalie.hpp"
-#include "Time.cpp"
+#include "Time.hpp"
 #include "Measure.hpp"
 
 
