@@ -84,45 +84,69 @@ void setup() {
 
 // ----- Loop -----
 void loop() {
+    static unsigned long lastAttempt = 0; // mémorise la dernière tentative de réception (en millisecondes)
     Waiter waiter;
     waiter.startTimer();
+    // Si 3/4 du temps d’intervalle est écoulé depuis la dernière tentative LoRa
+    unsigned long wakeUpDelay = (unsigned long)(config.lora_intervalle_secondes * 0.75 * 1000);
+    //tout en ms pour le waiter
 
-    std::queue<String> receiveQueue;
-    lora.startLoRa();
 
-    // Réception des paquets via LoRa
-    if (lora.handshake(0)) {
-        Serial.println("Handshake réussi. Réception des paquets...");
-        int last = lora.receivePackets(receiveQueue);
-        lora.closeSession(last);
-        lora.stopLoRa();
+    unsigned long currentTime = millis();
+    if (currentTime - lastAttempt >= wakeUpDelay) {
 
-        // Transfert vers la queue globale
-        while (!receiveQueue.empty()) {
-            sendingQueue.push(receiveQueue.front());
-            receiveQueue.pop();
-        }
+        std::queue<String> receiveQueue;
+        lora.startLoRa();
 
-        // Envoi via LoRaWAN si intervalle atteint
-        unsigned long currentTime = millis() / 1000;
-        if (currentTime - lastLoraSend >= (unsigned long)config.lora_intervalle_secondes) {
-            if (loraWAN.begin(config.appEui, config.appKey)) {
-                if (loraWAN.sendQueue(sendingQueue)) {
-                    Serial.println("Tous les paquets ont été envoyés !");
-                } else {
-                    Serial.println("Certains paquets n’ont pas pu être envoyés, ils seront réessayés.");
-                }
-            } else {
-                Serial.println("Connexion LoRaWAN impossible, report de l’envoi.");
+        // Réception des paquets via LoRa
+        if (lora.handshake(0)) {
+            Serial.println("Handshake réussi. Réception des paquets...");
+            int last = lora.receivePackets(receiveQueue);
+            lora.closeSession(last);
+            lora.stopLoRa();
+
+            // Met à jour le temps de la dernière tentative de réception
+            lastAttempt = millis() / 1000;
+
+            // Transfert vers la queue globale
+            while (!receiveQueue.empty()) {
+                sendingQueue.push(receiveQueue.front());
+                receiveQueue.pop();
             }
-            lastLoraSend = currentTime;
+
+            // Envoi via LoRaWAN si intervalle complet atteint
+            if (currentTime - lastLoraSend >= (unsigned long)config.lora_intervalle_secondes) {
+                if (loraWAN.begin(config.appEui, config.appKey)) {
+                    Serial.print("Envoi de ");
+                    Serial.print(sendingQueue.size());
+                    
+
+                    if (loraWAN.sendQueue(sendingQueue)) {
+                        Serial.println("Tous les paquets ont été envoyés !");
+                    } else {
+                        Serial.println("Certains paquets n’ont pas pu être envoyés, ils seront réessayés.");
+                    }
+                } else {
+                    Serial.println("Connexion LoRaWAN impossible, report de l’envoi.");
+                }
+                lastLoraSend = currentTime;
+            }
+
+        } else {
+            Serial.println("Handshake échoué, aucune donnée reçue.");
+            lora.stopLoRa();
+
+            // Met quand même à jour lastAttempt pour réessayer après 3/4 du temps
+            lastAttempt = millis() ;
         }
 
-    } else {
-        Serial.println("Handshake échoué, aucune donnée reçue.");
-        lora.stopLoRa();
+        Serial.println("Relais en veille jusqu’à la prochaine fenêtre de communication...");
     }
 
-    Serial.println("Relais en veille jusqu’à la prochaine fenêtre de communication...");
-    waiter.sleepUntil(60000); // Dort 1 min : à modifier 
+    // Calcule le temps restant avant le prochain réveil (non bloquant)
+    unsigned long nextWakeUp = wakeUpDelay - (currentTime - lastAttempt);
+    if ((long)nextWakeUp < 0) nextWakeUp = 0; // sécurité si dépassement
+
+    waiter.sleepUntil(nextWakeUp);
 }
+
