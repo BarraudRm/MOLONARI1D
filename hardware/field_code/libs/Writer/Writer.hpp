@@ -2,8 +2,8 @@
 // See internals/Writer.cpp for the implementations.
 
 // Ensure that this file is only included once in compilation
-#ifndef WRITER_EULALIE_CLASS_H
-#define WRITER_EULALIE_CLASS_H
+#ifndef WRITER_CLASS_H
+#define WRITER_CLASS_H
 
 #include <SD.h>
 #include "Measure.hpp"
@@ -39,7 +39,5 @@ class Writer
         // Safely close the connection with the SD card
         void Dispose();
 };
-
-#include "Writer.cpp" // Include the corresponding implementation file
 
 #endif
