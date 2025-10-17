@@ -2,10 +2,10 @@
 
 #ifndef MY_TIME
 #define MY_TIME
-
+#include "Time.hpp"
 #include <RTCZero.h>
 #include <RTClib.h>
-
+#include<vector>
 // Declare the RTC objects: internal (MKR) and external
 RTCZero internalRtc;
 RTC_PCF8523 externalRtc;
@@ -85,7 +85,7 @@ unsigned long GetSecondsSinceMidnight() {
 // Handles intervals and timing for periodic measurements throughout the day
 const int MEASURE_INTERVAL_MINUTES = 15; // Interval between measurements
 const int TOTAL_MEASUREMENTS_PER_DAY = 1440 / MEASURE_INTERVAL_MINUTES; // Total measurements in a day
-unsigned int measurementTimes[TOTAL_MEASUREMENTS_PER_DAY]; // Store times for each measurement
+std::vector<unsigned int> measurementTimes (TOTAL_MEASUREMENTS_PER_DAY); // Store times for each measurement
 int measurementCount = 0;
 
 // Initialize the array with all the measurement times (in seconds from midnight)
