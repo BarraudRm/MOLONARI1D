@@ -8,15 +8,15 @@
 
 // ----- Structures -----
 struct ConfigRelais {
-    //String appEui;
-    //String appKey;
+    String appEui;
+    String appKey;
     int CSPin;
     int lora_freq;
     int lora_intervalle_secondes;
 };
 
 // ----- Variables globales -----
-ConfigRelais config = {5, 868E6, 10800}; // valeurs par défaut
+ConfigRelais config = {"0000000000000000", "72C5FBBF2AB954D3316A1EE13AA3F141", 5, 868E6, 900}; // valeurs par défaut
 LoraCommunication lora(868E6, 0xAA, 0xFF); //regler les problemes !
 LoraWANCommunication loraWAN;
 std::queue<String> sendingQueue;
@@ -46,9 +46,9 @@ void lireConfigCSV(const char* NomFichier) {
         String key = line.substring(0, idx);
         String val = line.substring(idx + 1);
 
-        //if (key == "appEui") config.appEui = val;
-        //else if (key == "appKey") config.appKey = val;
-        if (key == "CSPin") config.CSPin = val.toInt();
+        if (key == "appEui") config.appEui = val;
+        else if (key == "appKey") config.appKey = val;
+        else if (key == "CSPin") config.CSPin = val.toInt();
         else if (key == "lora_freq") config.lora_freq = val.toInt();
         else if (key == "lora_intervalle_secondes") config.lora_intervalle_secondes = val.toInt();
     }
@@ -85,45 +85,69 @@ void setup() {
 
 // ----- Loop -----
 void loop() {
+    static unsigned long lastAttempt = 0; // mémorise la dernière tentative de réception (en millisecondes)
     Waiter waiter;
     waiter.startTimer();
+    // Si 3/4 du temps d’intervalle est écoulé depuis la dernière tentative LoRa
+    unsigned long wakeUpDelay = (unsigned long)(config.lora_intervalle_secondes * 0.75 * 1000);
+    //tout en ms pour le waiter
 
-    std::queue<String> receiveQueue;
-    lora.startLoRa();
 
-    // Réception des paquets via LoRa
-    if (lora.handshake(0)) {
-        Serial.println("Handshake réussi. Réception des paquets...");
-        int last = lora.receivePackets(receiveQueue);
-        lora.closeSession(last);
-        lora.stopLoRa();
+    unsigned long currentTime = millis();
+    if (currentTime - lastAttempt >= wakeUpDelay) {
 
-        // Transfert vers la queue globale
-        while (!receiveQueue.empty()) {
-            sendingQueue.push(receiveQueue.front());
-            receiveQueue.pop();
-        }
+        std::queue<String> receiveQueue;
+        lora.startLoRa();
 
-        // Envoi via LoRaWAN si intervalle atteint
-        unsigned long currentTime = millis() / 1000;
-        if (currentTime - lastLoraSend >= (unsigned long)config.lora_intervalle_secondes) {
-            if (loraWAN.begin(config.appEui, config.appKey)) {
-                if (loraWAN.sendQueue(sendingQueue)) {
-                    Serial.println("Tous les paquets ont été envoyés !");
-                } else {
-                    Serial.println("Certains paquets n’ont pas pu être envoyés, ils seront réessayés.");
-                }
-            } else {
-                Serial.println("Connexion LoRaWAN impossible, report de l’envoi.");
+        // Réception des paquets via LoRa
+        if (lora.handshake(0)) {
+            Serial.println("Handshake réussi. Réception des paquets...");
+            int last = lora.receivePackets(receiveQueue);
+            lora.closeSession(last);
+            lora.stopLoRa();
+
+            // Met à jour le temps de la dernière tentative de réception
+            lastAttempt = millis() / 1000;
+
+            // Transfert vers la queue globale
+            while (!receiveQueue.empty()) {
+                sendingQueue.push(receiveQueue.front());
+                receiveQueue.pop();
             }
-            lastLoraSend = currentTime;
+
+            // Envoi via LoRaWAN si intervalle complet atteint
+            if (currentTime - lastLoraSend >= (unsigned long)config.lora_intervalle_secondes) {
+                if (loraWAN.begin(config.appEui, config.appKey)) {
+                    Serial.print("Envoi de ");
+                    Serial.print(sendingQueue.size());
+                    
+
+                    if (loraWAN.sendQueue(sendingQueue)) {
+                        Serial.println("Tous les paquets ont été envoyés !");
+                    } else {
+                        Serial.println("Certains paquets n’ont pas pu être envoyés, ils seront réessayés.");
+                    }
+                } else {
+                    Serial.println("Connexion LoRaWAN impossible, report de l’envoi.");
+                }
+                lastLoraSend = currentTime;
+            }
+
+        } else {
+            Serial.println("Handshake échoué, aucune donnée reçue.");
+            lora.stopLoRa();
+
+            // Met quand même à jour lastAttempt pour réessayer après 3/4 du temps
+            lastAttempt = millis() ;
         }
 
-    } else {
-        Serial.println("Handshake échoué, aucune donnée reçue.");
-        lora.stopLoRa();
+        Serial.println("Relais en veille jusqu’à la prochaine fenêtre de communication...");
     }
 
-    Serial.println("Relais en veille jusqu’à la prochaine fenêtre de communication...");
-    waiter.sleepUntil(60000); // Dort 1 min : à modifier 
+    // Calcule le temps restant avant le prochain réveil (non bloquant)
+    unsigned long nextWakeUp = wakeUpDelay - (currentTime - lastAttempt);
+    if ((long)nextWakeUp < 0) nextWakeUp = 0; // sécurité si dépassement
+
+    waiter.sleepUntil(nextWakeUp);
 }
+

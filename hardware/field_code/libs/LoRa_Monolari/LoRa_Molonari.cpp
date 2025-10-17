@@ -179,7 +179,7 @@ uint8_t LoraCommunication::sendPackets(std::queue<String> &sendQueue) {
 int LoraCommunication::receivePackets(std::queue<String> &receiveQueue) {
     uint8_t packetNumber = 0; String payload; RequestType requestType; uint8_t prevPacket = -1;
     unsigned long startTime = millis(); int ackTimeout = 60000;
-    receiveQueue.push(String(destination));
+    receiveQueue.push(String(destination)); //à conserver ?
 
     while (millis() - startTime < ackTimeout) {
         if (receivePacket(packetNumber, requestType, payload)) {
