@@ -10,6 +10,15 @@
 
 #include <Arduino.h>
 #include <SD.h>
+<<<<<<< HEAD:hardware/field_code/libs/Writer/writer_lalie.cpp
+#include <string>
+
+#include "writer_lalie.hpp"
+#include "Time.hpp"
+#include "Measure.hpp"
+
+=======
+>>>>>>> 92fa1444a2d81a2d9cf047d095caf58b29553639:hardware/Trash/2025/Writer.cpp
 
 #ifdef SD_DEBUG
 #define SD_LOG(msg) Serial.print(msg)

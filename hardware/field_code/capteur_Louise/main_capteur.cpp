@@ -10,20 +10,20 @@
 #include "LoRa_Molonari.hpp"
 #include "Time.hpp"
 #include "Waiter.hpp"
-#include "Measure.hpp"
+
 
 
 // ----- Structures -----
-struct Capteur {
+struct Sensor {
     String id;
-    String type; // "pression" ou "temperature"
+    String type; // "Pression ou Thermistance ou Thermocouple"
     int pin;
     float offset;
-    float facteur;
+    float scale;
 };
 
 // ----- Variables globales -----
-std::vector<Capteur> liste_capteurs; // Capteurs lus depuis CSV
+std::vector<Sensor> liste_capteurs; // Capteurs lus depuis CSV
 int FREQUENCE_MINUTES = 15; //initialisation par défaut
 int LORA_INTERVAL_H = 3;//initialisation par défaut
 
@@ -71,7 +71,7 @@ void lireConfigCSV(const char* NomFichier) {
                 tokens[tokenIdx++] = line.substring(first, last);
                 first = last + 1;
             }
-            Capteur c;
+            Sensor c;
             c.id = tokens[0];
             c.type = tokens[1];
             // Conversion des pins A0-A5 en int
@@ -103,7 +103,7 @@ void setup() {
     // Compter les capteurs
     int ncapteur = 0; 
     for (auto &c : liste_capteurs) {
-        ncapteur++
+        ncapteur++;
     }
 
     // Allocation dynamique
