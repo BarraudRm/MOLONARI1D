@@ -6,7 +6,7 @@ Sensor::Sensor() : dataPin(-1), enablePin(-1), offset(-1), scale(-1), type_capte
   // Default constructor body (if needed)
 }
 
-Sensor::Sensor(int _dataPin, int _enablePin, float _offset, float _scale, std::string _type_capteur) : dataPin(_dataPin), enablePin(_enablePin), offset(_offset), scale(_scale), type_capteur(_type_capteur) {
+Sensor::Sensor(int _dataPin, int _enablePin, float _offset, float _scale, String _type_capteur) : dataPin(_dataPin), enablePin(_enablePin), offset(_offset), scale(_scale), type_capteur(_type_capteur) {
   // Attribute a pin to the temperature measurement and the power
   pinMode(enablePin, OUTPUT);
   pinMode(dataPin, INPUT);

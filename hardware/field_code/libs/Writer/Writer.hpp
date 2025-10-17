@@ -23,7 +23,7 @@ class Writer
         void WriteInNewLine(Measure data);
 
         // Populate a Measure object using the raw data provided
-        void ApplyContent(Measure* measure, int npressure, double *pressure, int ntemp, double *temp);
+        void ApplyContent(Measure* measure, int ncapteur, double *toute_mesure);
 
         // Attempt to reconnect to the SD card if the connection is lost
         bool Reconnect();
@@ -34,12 +34,10 @@ class Writer
 
         // Process raw data and append it as a new entry in the CSV file
         // NF 29/4/2025 modification to pass 
-        void LogData(int npressure, double *pressure, int ntemp, double *temperature);
+        void LogData(int ncapteur, double *toute_mesure);
 
         // Safely close the connection with the SD card
         void Dispose();
 };
-
-#include "Writer.cpp" // Include the corresponding implementation file
 
 #endif

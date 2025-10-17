@@ -15,8 +15,6 @@
 #include <string>
 #include <Arduino.h>
 
-
-
 typedef double MESURE;
 
 class Sensor {
@@ -25,7 +23,7 @@ class Sensor {
         // Initialise the sensor for the first time. 
         // dataPin -> Analog input to read data from (Analog pin)
         // enablePin -> Digital output to enable/disable the sensor 
-        Sensor(int dataPin, int enablePin, float offset, float scale, std::string type_capteur);
+        Sensor(int dataPin, int enablePin, float offset, float scale, String type_capteur);
         
         // Measure the pressure
         MESURE Measure();
@@ -37,7 +35,7 @@ class Sensor {
         const int enablePin;
         const float offset;  
         const float scale;
-        const std::string type_capteur;   
+        const String type_capteur;   
 };
 
 class Measure {
@@ -53,8 +51,8 @@ class Measure {
 
     std::vector<double> channel;
  
-    std::string oneLine();
-    std::string ToString();
+    String oneLine();
+    String ToString();
 };
 
 #endif

@@ -5,14 +5,20 @@
 #ifndef WRITER_CLASS
 #define WRITER_CLASS
 
+#include "Writer.hpp"
+#include "Time.cpp"
+
 #include <Arduino.h>
 #include <SD.h>
+<<<<<<< HEAD:hardware/field_code/libs/Writer/writer_lalie.cpp
 #include <string>
 
 #include "writer_lalie.hpp"
-#include "Time.cpp"
+#include "Time.hpp"
 #include "Measure.hpp"
 
+=======
+>>>>>>> 92fa1444a2d81a2d9cf047d095caf58b29553639:hardware/Trash/2025/Writer.cpp
 
 #ifdef SD_DEBUG
 #define SD_LOG(msg) Serial.print(msg)
@@ -23,7 +29,7 @@
 #endif
 
 // Define a comma string for separating CSV columns
-const std::string COMA = ",";
+const String COMA = String(',');
 
 // GetNextLine function: Returns the number of lines in the CSV file, representing the next ID.
 // SHOULD BE CALLED ONLY ONCE to initialize next_id
@@ -58,7 +64,7 @@ void Writer::WriteInNewLine(Measure data){
     SD_LOG("Writing data ..."); // Debug log
     // Write measurement data as a single CSV line
     //this->file.println(String(data.id)+ COMA + data.date + COMA + data.time + COMA + String(data.chanel1) + COMA + String(data.chanel2) + COMA + String(data.chanel3) + COMA + String(data.chanel4));
-    this->file.println(data.ToString()); // CHANGE TOSTRING TO USE STD::STRING
+    this->file.println(data.ToString()); // Write the string representation of the measurement
     SD_LOG_LN(" Done");
 
     SD_LOG("Flushing ..."); // Ensure data is saved immediately
@@ -67,11 +73,13 @@ void Writer::WriteInNewLine(Measure data){
 }
 
 // ApplyContent: Fills a Measure object with raw data values for each channel
-void Writer::ApplyContent(Measure* measure, int ncapteur, double  *toute_mesure) {
+void Writer::ApplyContent(Measure* measure, int npressure,double  *pressure, int ntemp,double *temp) {
     
-    for(int i = 0; i < ncapteur; i++) {
-        measure->channel.push_back(toute_mesure[i]); // Assign  values
-    
+    for(int i = 0; i < npressure; i++) {
+        measure->chanelP[i] = pressure[i]; // Assign pressure values
+    }
+    for(int i = 0; i < ntemp; i++) {
+        measure->chanelT[i] = temp[i]; // Assign temperature values
     }
 }
 
@@ -94,11 +102,11 @@ void Writer::EstablishConnection(const int CSpin) {
 }
 
 // LogData: Processes raw data, applies a timestamp, and writes it to the CSV file as a new entry
-void Writer::LogData(int ncapteur, double *toute_mesure) {
+void Writer::LogData(int npressure, double *pressure, int ntemp, double *temperature) {
 
     // Create a new Measure object
     Measure data;
-    this->ApplyContent(&data,ncapteur, toute_mesure); // Assign channel values
+    this->ApplyContent(&data,npressure,pressure,ntemp,temperature); // Assign channel values
     ApplyCurrentTime(&data); // Assign current time and date
     data.id = this->next_id; // Set unique ID for the measurement
 
