@@ -5,3 +5,4 @@ CSPin,5
 lora_freq,868000000
 #Envoi toutes les 15 minutes:
 lora_intervalle_secondes,900
+            

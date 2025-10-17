@@ -96,7 +96,6 @@ void setup() {
 
     // Lecture de la configuration CSV
     lireConfigCSV("config.csv");
-    int LORA_INTERVAL = LORA_INTERVAL_S;
 
     // Compter les capteurs
     int ncapteur = 0; 
