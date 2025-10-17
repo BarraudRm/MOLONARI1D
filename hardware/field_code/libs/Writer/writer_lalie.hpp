@@ -2,8 +2,8 @@
 // See internals/Writer.cpp for the implementations.
 
 // Ensure that this file is only included once in compilation
-#ifndef WRITER_CLASS_H
-#define WRITER_CLASS_H
+#ifndef WRITER_EULALIE_CLASS_H
+#define WRITER_EULALIE_CLASS_H
 
 #include <SD.h>
 #include "Measure.hpp"
