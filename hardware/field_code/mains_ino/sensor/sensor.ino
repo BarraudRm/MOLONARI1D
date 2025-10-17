@@ -1,5 +1,3 @@
-//FORMERLY Sensor_demo.ino, philosophically the main_sensor
-
 /*
 This firmware will be is meant for the arduino in the river bed of the Molonari system.
 
@@ -31,17 +29,16 @@ Required hardware :
 
 
 // ----- Imports -----
-#include <Arduino.h>
-#include <ArduinoLowPower.h>
 
-#include "LoRa_Molonari.hpp"
-#include "Low_Power.hpp"
-#include "Pressure_Sensor.hpp"
-#include "Temp_Sensor.hpp"
-#include "Time.cpp"
-#include "SD_Initializer.cpp"
-#include "Writer.hpp"
-#include "Waiter.hpp"
+#include "../../../shared/Lora.hpp"
+#include "../../../shared/Low_Power.cpp"
+#include "../../../shared/Pressure_Sensor.hpp"
+#include "../../../shared/Temp_Sensor.hpp"
+#include "../../../shared/Time.cpp"
+#include "../../../shared/SD_Initializer.cpp"
+#include "../../../shared/Writer.hpp"
+#include "../../../shared/Waiter.hpp"
+#include <ArduinoLowPower.h>
 // #include "internals/FreeMemory.cpp"
 
 
@@ -210,8 +207,6 @@ void loop() {
     Serial.println("Transmitting data via LoRa...");
     waiter.delayUntil(300000);
     Serial.println("Data transmitted. Resetting measurement count.");
-
-    //ENVOIE DES DONNÉES
   }
 
   // Test code
