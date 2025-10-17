@@ -2,11 +2,10 @@
 #include <vector>
 #include <Arduino.h>
 #include <SD.h>
-#include <Lora.h>
+#include <LoRa.h>
 #include <ArduinoLowPower.h>
 
-#include "Pressure_Sensor.hpp"
-#include "Temp_Sensor.hpp"
+#include "Measure.hpp"
 #include "Writer.hpp"
 #include "LoRa_Molonari.hpp"
 #include "Time.hpp"

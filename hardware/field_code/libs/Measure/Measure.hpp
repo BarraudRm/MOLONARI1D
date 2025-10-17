@@ -15,8 +15,6 @@
 #include <string>
 #include <Arduino.h>
 
-
-
 typedef double MESURE;
 
 class Sensor {
@@ -53,8 +51,8 @@ class Measure {
 
     std::vector<double> channel;
  
-    std::string oneLine();
-    std::string ToString();
+    String oneLine();
+    String ToString();
 };
 
 #endif
