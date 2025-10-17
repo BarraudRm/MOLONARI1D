@@ -71,7 +71,7 @@ void setup() {
     Serial.println("Configuration chargée.");
 
     // Initialisation LoRa communication
-    lora = LoraCommunication(config.lora_freq, 0xAA, 0xFF);
+    lora = LoraCommunication(config.lora_freq, 0xAA, 0xFF, RoleType::MASTER);
 
     // Vérification SD
     if (!SD.begin(config.CSPin)) {
@@ -100,7 +100,8 @@ void loop() {
         lora.startLoRa();
 
         // Réception des paquets via LoRa
-        if (lora.handshake(0)) {
+        uint8_t deviceId = 0;
+        if (lora.handshake(deviceId)) {
             Serial.println("Handshake réussi. Réception des paquets...");
             int last = lora.receivePackets(receiveQueue);
             lora.closeSession(last);
