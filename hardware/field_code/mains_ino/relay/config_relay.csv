@@ -1,0 +1,7 @@
+# Configuration du relais LoRa Molonari
+appEui,0000000000000000
+appKey,00112233445566778899aabbccddeeff
+CSPin,5
+lora_freq,868000000
+#Envoi toutes les 15 minutes:
+lora_intervalle_secondes,900
