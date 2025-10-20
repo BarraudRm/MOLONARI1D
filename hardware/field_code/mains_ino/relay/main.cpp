@@ -70,7 +70,7 @@ void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, HIGH);
 
-    Serial.begin(115200);
+    Serial.begin(9600);
     unsigned long end_date = millis() + 5000;
     while (!Serial && millis() < end_date) {}
 
