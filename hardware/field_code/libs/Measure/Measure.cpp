@@ -21,11 +21,7 @@ MESURE Sensor::Measure() {
   delay(200);
   MESURE mesure = analogRead(dataPin);
   digitalWrite(enablePin, LOW);
-  if (type_capteur == "Thermistance") {
-  return 1/(1/298.15+log(4096/mesure-1)/scale)-273.15+offset;
-} else {
-  return (mesure*3.3/4096-offset)*scale;
-}
+  return mesure;
 }
 
 String Measure::oneLine() {
