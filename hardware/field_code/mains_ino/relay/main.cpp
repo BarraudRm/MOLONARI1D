@@ -5,24 +5,8 @@
 #include "LoRaWan_Molonari.hpp"
 #include "LoRa_Molonari.hpp"
 #include "Waiter.hpp"
+#include "Reader.hpp"
 
-// ----- Structures -----
-struct ConfigRelais {
-    String appEui;
-    String appKey;
-    int CSPin;
-    long lora_freq;
-    int lora_intervalle_secondes;
-};
-
-// ----- Variables globales -----
-ConfigRelais config = {
-  "0000000000000000",
-  "00112233445566778899aabbccddeeff",
-  5,
-  868000000L,
-  900
-};
 
 LoraCommunication lora(config.lora_freq, 0xAA, 0xFF, RoleType::MASTER);
 
@@ -33,51 +17,21 @@ unsigned long lastLoraSend = 0;
 unsigned long lastAttempt = 0;
 
 
-// ----- Lecture CSV -----
-void lireConfigCSV(const char* NomFichier) {
-    if (!SD.begin(config.CSPin)) {
-        Serial.println("Impossible de monter SD");
-        return;
-    }
-
-    File f = SD.open(NomFichier);
-    if (!f) {
-        Serial.println("Fichier CSV non trouvé, utilisation des valeurs par défaut");
-        return;
-    }
-
-    while (f.available()) {
-        String line = f.readStringUntil('\n');
-        line.trim();
-        if (line.length() == 0 || line.startsWith("#")) continue;
-
-        int idx = line.indexOf(',');
-        if (idx < 0) continue;
-        String key = line.substring(0, idx);
-        String val = line.substring(idx + 1);
-
-        if (key == "appEui") config.appEui = val;
-        else if (key == "appKey") config.appKey = val;
-        else if (key == "CSPin") config.CSPin = val.toInt();
-        else if (key == "lora_freq") config.lora_freq = val.toFloat();
-        else if (key == "lora_intervalle_secondes") config.lora_intervalle_secondes = val.toInt();
-    }
-    f.close();
-}
 
 // ----- Setup -----
 void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, HIGH);
 
-    Serial.begin(115200);
+    Serial.begin(9600);
     unsigned long end_date = millis() + 5000;
     while (!Serial && millis() < end_date) {}
 
     Serial.println("\n=== Initialisation du Relais Molonari ===");
 
     // Lecture configuration CSV
-    lireConfigCSV("relay_config.csv");
+    Reader reader;
+    reader.lireConfigCSV("relay_config.csv");
     Serial.println("Configuration chargée.");
 
     // Initialisation LoRa communication
