@@ -95,7 +95,7 @@ void setup() {
     while (!Serial && millis() < end_date) {}
 
     // Lecture de la configuration CSV
-    lireConfigCSV("config.csv");
+    lireConfigCSV("config_sensor.csv");
 
     // Compter les capteurs
     int ncapteur = 0; 
