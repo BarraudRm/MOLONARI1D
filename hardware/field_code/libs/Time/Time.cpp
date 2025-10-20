@@ -5,8 +5,15 @@
 
 #include "Time.hpp"
 // Declare the RTC objects: internal (MKR) and external
-extern RTCZero internalRtc;
-extern RTC_PCF8523 externalRtc;
+RTCZero internalRtc;
+RTC_PCF8523 externalRtc;
+int measurementCount = 0;
+
+const int MEASURE_INTERVAL_MINUTES = 15; // Interval between measurements
+const int TOTAL_MEASUREMENTS_PER_DAY = 1440 / MEASURE_INTERVAL_MINUTES; // Total measurements in a day
+std::vector<unsigned int> measurementTimesVec (TOTAL_MEASUREMENTS_PER_DAY); 
+
+
 
 // Helper function to convert an integer to a 2-digit string (e.g., 7 -> "07")
 String UIntTo2DigitString(uint8_t x) {
@@ -79,11 +86,7 @@ unsigned long GetSecondsSinceMidnight() {
   return hour * 3600 + minute * 60 + second; // Convert hours and minutes to seconds
 }
 
-// --- Measurement Control ---
-// Handles intervals and timing for periodic measurements throughout the day
-const int MEASURE_INTERVAL_MINUTES = 15; // Interval between measurements
-const int TOTAL_MEASUREMENTS_PER_DAY = 1440 / MEASURE_INTERVAL_MINUTES; // Total measurements in a day
-static std::vector<unsigned int> measurementTimesVec (TOTAL_MEASUREMENTS_PER_DAY); // Store times for each measurement (renamed to avoid linkage conflicts)
+
 
 
 // Initialize the array with all the measurement times (in seconds from midnight)

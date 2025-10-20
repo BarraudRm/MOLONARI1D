@@ -45,8 +45,9 @@ String Measure::oneLine() {
     return str; // Return the constructed string
     }
 
+//Probablement pas utilisé
 String Measure::ToString(){
-      int i;
+      //int i;
       String str = "Measure n°" + oneLine();                                      // Add last sensor data
     
     return str; // Return the constructed string
